@@ -105,8 +105,6 @@ async def on_message(message):
         if text in ['hello', 'hi', 'hey']:
             await message.channel.send(f'Hello there, {author}!')            
             return
-
-        ############################################################
         
     except Exception as e:
         await logError(traceback.format_exc())
