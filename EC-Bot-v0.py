@@ -15,18 +15,23 @@ Please feel free to message us if you are facing any difficulties.'''
 
 debugMode = (gethostname() == 'VKSN-Desktop')
 
+if debugMode:
+    botToken, guildID = open('ECbotInfo.txt', 'r').readlines()
+    guildID = int(guildID)
+else:
+    botToken = str(os.environ.get('BOT_TOKEN'))
+    guildID = int(os.environ.get('GUILD_ID'))
+
 despace = lambda s: s.replace(' ', '')
 commandPrefix = '!'
+
 ########################################
-
-
 # Log an error message and print if debugMode is on
 async def logError(myText):
     expChannel = discord.utils.get(ohGuild.channels, name=f'bot-experiments')
     if debugMode:
         print(str(myText))
     await expChannel.send('<@!693797662960386069> **Log**: ' + str(myText))
-
 
 # Greet new users on DM
 @client.event
@@ -44,7 +49,7 @@ async def on_member_join(member):
 async def on_ready():
     try:
         global ohGuild
-        ohGuild = client.get_guild(716324499791806525)
+        ohGuild = client.get_guild(guildID)
         expChannel = discord.utils.get(ohGuild.channels, name='bot-experiments')
         await logError('Bot Online')
         
@@ -107,7 +112,4 @@ async def on_message(message):
         await logError(traceback.format_exc())
 
 ########################################
-if debugMode:
-    client.run(open('BOT_TOKEN.txt', 'r').read())
-else:
-    client.run(str(os.environ.get('BOT_TOKEN')))
+client.run(botToken)
