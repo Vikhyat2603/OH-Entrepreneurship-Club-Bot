@@ -16,11 +16,9 @@ Please feel free to message us if you are facing any difficulties.'''
 debugMode = (gethostname() == 'VKSN-Desktop')
 
 if debugMode:
-    botToken, guildID = open('ECbotInfo.txt', 'r').readlines()
-    guildID = int(guildID)
+    botToken = open('BOT_TOKEN.txt', 'r').read()
 else:
     botToken = str(os.environ.get('BOT_TOKEN'))
-    guildID = int(os.environ.get('GUILD_ID'))
 
 despace = lambda s: s.replace(' ', '')
 commandPrefix = '!'
@@ -49,7 +47,7 @@ async def on_member_join(member):
 async def on_ready():
     try:
         global ohGuild
-        ohGuild = client.get_guild(guildID)
+        ohGuild = client.get_guild(716324499791806525)
         expChannel = discord.utils.get(ohGuild.channels, name='bot-experiments')
         await logError('Bot Online')
         
