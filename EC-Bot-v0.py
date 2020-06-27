@@ -40,7 +40,7 @@ async def on_member_join(member):
         await member.create_dm()
         await member.dm_channel.send(f'Hi {member.name}, welcome to the **Openhouse Entrepreneurship Club** Server!')
         await member.dm_channel.send(welcomeMessage)
-        await message.channel.send(file=discord.File(r'assets\WelcomePoster.jpg'))
+        await member.dm_channel.send(file=discord.File(r'assets\WelcomePoster.jpg'))
     except Exception as e:
         await logError(f'Member join : {traceback.format_exc()}')
 
