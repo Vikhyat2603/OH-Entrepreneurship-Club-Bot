@@ -40,7 +40,7 @@ async def on_member_join(member):
         await member.create_dm()
         await member.dm_channel.send(f'Hi {member.name}, welcome to the **Openhouse Entrepreneurship Club** Server!')
         await member.dm_channel.send(welcomeMessage)
-        await member.dm_channel.send(file=discord.File(r'assets\WelcomePoster.jpg'))
+        await member.dm_channel.send(file=discord.File(r'assets/WelcomePoster.jpg'))
     except Exception as e:
         await logError(f'Member join : {traceback.format_exc()}')
 
@@ -84,15 +84,6 @@ async def on_message(message):
                     await message.channel.send(str(exec(code)))
                 except Exception:
                     await logError(traceback.format_exc())
-
-        # Pass queries to the queries channel
-        if text.startswith('!query'):
-            query = text[6:]
-            queryMessage = ('-' * 80) + f'\nUser : {authorStr}\nQuery : {query}'
-            queryChannel = discord.utils.get(guild.channels, name='queries')
-            await queryChannel.send(queryMessage)
-            await message.channel.send('Sent:\n' + queryMessage)
-            return
 
         text = despace(text.lower())
 
