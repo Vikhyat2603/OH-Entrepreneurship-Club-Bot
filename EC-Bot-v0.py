@@ -8,11 +8,6 @@ client = discord.Client()
 
 ########################################
 
-welcomeMessage = '''Thank you for joining the us on Discord, we are so excited to have you on board!
-Don’t worry if the new system seems challenging, we are here to help.
-All the channels here are like different group chats where you can discuss anything you want (channel=chat).
-Please feel free to message us if you are facing any difficulties.'''
-
 debugMode = (gethostname() == 'VKSN-Desktop')
 
 if debugMode:
@@ -37,7 +32,6 @@ async def on_member_join(member):
     try:
         await member.create_dm()
         await member.dm_channel.send(f'Hi {member.name}, welcome to the **Openhouse Entrepreneurship Club** Server!')
-        await member.dm_channel.send(welcomeMessage)
         await member.dm_channel.send(file=discord.File(r'assets/WelcomePoster.jpg'))
     except Exception as e:
         await logError(f'Member join : {traceback.format_exc()}')
