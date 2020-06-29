@@ -20,8 +20,8 @@ commandPrefix = '!'
 
 ########################################
 # Log an error message and print if debugMode is on
-async def logError(myText):
-    expChannel = discord.utils.get(ohGuild.channels, name=f'bot-experiments')
+async def logError(guild, myText):
+    expChannel = discord.utils.get(guild.channels, name=f'bot-experiments')
     if debugMode:
         print(str(myText))
     await expChannel.send('<@!693797662960386069> **Log**: ' + str(myText))
@@ -34,19 +34,12 @@ async def on_member_join(member):
         await member.dm_channel.send(f'Hi {member.name}, welcome to the **Openhouse Entrepreneurship Club** Server!')
         await member.dm_channel.send(file=discord.File(r'assets/WelcomePoster.jpg'))
     except Exception as e:
-        await logError(f'Member join : {traceback.format_exc()}')
+        await logError(client.guilds[0], f'Member join : {traceback.format_exc()}')
 
 # Informs me when bot comes online
 @client.event
 async def on_ready():
-    try:
-        global ohGuild
-        ohGuild = client.get_guild(716324499791806525)
-        expChannel = discord.utils.get(ohGuild.channels, name='bot-experiments')
-        await logError('Bot Online')
-        
-    except Exception as e:
-        await logError(traceback.format_exc())
+    await logError(client.guilds[0], 'Bot Online')
     
 # Respond to messages
 @client.event
@@ -68,14 +61,14 @@ async def on_message(message):
                 try:
                     await message.channel.send(str(eval(code)))
                 except Exception:
-                    await logError(traceback.format_exc())
+                    await logError(guild, traceback.format_exc())
 
             elif text.startswith('!exec'):
                 code = text[6:]
                 try:
                     await message.channel.send(str(exec(code)))
                 except Exception:
-                    await logError(traceback.format_exc())
+                    await logError(guild, traceback.format_exc())
 
         text = despace(text.lower())
 
@@ -90,7 +83,7 @@ async def on_message(message):
             return
         
     except Exception as e:
-        await logError(traceback.format_exc())
+        await logError(guild, traceback.format_exc())
 
 ########################################
 client.run(botToken)
