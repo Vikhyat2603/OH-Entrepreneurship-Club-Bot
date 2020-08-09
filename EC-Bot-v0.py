@@ -3,7 +3,7 @@ import random
 from socket import gethostname
 import traceback
 import os
-
+ 
 client = discord.Client()
 
 ########################################
